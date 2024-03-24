@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Farmasi</title>
+    <!-- Style CSS (dapat disimpan dalam file terpisah jika diinginkan) -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        nav {
+            background-color: #f0f0f0;
+            padding: 10px;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Dashboard Farmasi</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <?php
+            // Daftar menu dengan tautan dinamis
+            $menuItems = [
+                'Farmasi' => 'farmasi',
+                'Obat' => 'obat',
+                'Pasien' => 'pasien',
+                'Rekam Medis' => 'rekam-medis',
+                'Tindakan' => 'tindakan'
+            ];
+
+            // Iterasi melalui daftar menu dan menampilkan tautan
+            foreach ($menuItems as $menuItem => $link) {
+                echo '<li><a href="dashboard.php?page=' . $link . '">' . $menuItem . '</a></li>';
+            }
+            ?>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <?php
+        // Memeriksa apakah ada parameter 'page' yang diberikan dalam URL
+        if(isset($_GET['page'])) {
+            // Memuat konten sesuai dengan parameter 'page'
+            $page = $_GET['page'];
+            $allowedPages = ['farmasi', 'obat', 'pasien', 'rekam-medis', 'tindakan'];
+
+            // Memeriksa apakah halaman yang diminta termasuk dalam daftar halaman yang diizinkan
+            if (in_array($page, $allowedPages)) {
+                // Memuat tampilan yang sesuai (misalnya, farmasi.php, obat.php, dsb.)
+                include $page . '.php';
+            } else {
+                // Halaman tidak ditemukan
+                echo "<p>Halaman tidak ditemukan.</p>";
+            }
+        } else {
+            // Jika tidak ada parameter 'page', tampilkan halaman default (misalnya, halaman dashboard farmasi)
+            include 'farmasi.php';
+        }
+        ?>
+    </div>
+
+    <footer>
+        <p>Hak Cipta &copy; 2024 Contoh Perusahaan.</p>
+    </footer>
+</body>
+</html>
